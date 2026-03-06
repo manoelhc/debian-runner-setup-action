@@ -101,14 +101,14 @@ install_packages() {
     local packages="$1"
     
     echo "Updating package lists..."
-    sudo apt-get update -qq
+    apt-get update -qq
     
     echo "Installing packages: $packages"
-    sudo apt-get install -y -qq $packages
+    apt-get install -y -qq $packages
     
     echo "Cleaning up to reduce cache size..."
-    sudo apt-get clean -qq
-    sudo rm -rf /var/lib/apt/lists/*
+    apt-get clean -qq
+    rm -rf /var/lib/apt/lists/*
 }
 
 main() {
@@ -128,10 +128,10 @@ main() {
     fi
     
     echo "Installing packages..."
-    install_packages "$packages"
+    sudo install_packages "$packages"
     
     if [ "$ENABLE_CACHE" = "true" ]; then
-        create_hollow_package "$HOLLOW_PACKAGE_NAME"
+        sudo create_hollow_package "$HOLLOW_PACKAGE_NAME"
     fi
     
     echo "=== Setup complete ==="
