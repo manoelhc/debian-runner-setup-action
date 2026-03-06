@@ -30,7 +30,7 @@ get_package_presets() {
             echo "build-essential git curl wget libssl-dev libcrypto3-dev libpp-dev libnghttp2-dev libzstd-dev"
             ;;
         full)
-            echo "build-essential cmake pkg-config libssl-dev libffi-dev libreadline-dev libsqlite3-dev libncurses5-dev libbz2-dev liblzma-dev libzstd-dev zlib1g-dev git curl wget autoconf automake libtool bison flex gettext libcurl4-openssl-dev libnghttp2-dev uuid-dev libev-dev libevent-dev libpcre2-dev libpq-dev libmysqlclient-dev libxml2-dev libxslt1-dev libyaml-dev libgmp-dev libatomic1"
+            echo "build-essential cmake pkg-config libssl-dev libffi-dev libreadline-dev libsqlite3-dev libncurses5-dev libbz2-dev liblzma-dev libzstd-dev zlib1g-dev git curl wget autoconf automake libtool bison flex gettext libcurl4-openssl-dev libnghttp2-dev uuid-dev libev-dev libevent-dev libpcre2-dev libpq-dev libmariadb-dev libxml2-dev libxslt1-dev libyaml-dev libgmp-dev libatomic1"
             ;;
         *)
             echo "$preset"
