@@ -1,0 +1,34 @@
+name: 'Debian Runner Setup'
+description: 'Install common build packages for Debian/Ubuntu runners with .deb caching'
+author: 'ManoelHC'
+inputs:
+  packages:
+    description: 'Space-separated list of packages to install (or preset: minimal, python, ruby, rust, go, node, full)'
+    default: 'full'
+  cache:
+    description: 'Enable caching of .deb files'
+    default: 'true'
+  cache-key:
+    description: 'Custom cache key suffix'
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - id: cache
+      if: ${{ inputs.cache == 'true' }}
+      uses: actions/cache@v4
+      with:
+        path: /var/cache/apt/archives
+        key: ${{ runner.os }}-apt-${{ inputs.packages }}-${{ inputs.cache-key }}
+        restore-keys: |
+          ${{ runner.os }}-apt-${{ inputs.packages }}-
+      continue-on-error: true
+
+    - id: setup
+      shell: bash
+      env:
+        INPUT_PACKAGES: ${{ inputs.packages }}
+        INPUT_CACHE: ${{ inputs.cache }}
+      run: |
+        "${{ github.action_path }}/scripts/entrypoint.sh"
