@@ -128,10 +128,10 @@ main() {
     fi
     
     echo "Installing packages..."
-    sudo install_packages "$packages"
+    install_packages "$packages"
     
     if [ "$ENABLE_CACHE" = "true" ]; then
-        sudo create_hollow_package "$HOLLOW_PACKAGE_NAME"
+        create_hollow_package "$HOLLOW_PACKAGE_NAME"
     fi
     
     echo "=== Setup complete ==="
