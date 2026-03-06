@@ -11,6 +11,9 @@ inputs:
   cache-key:
     description: 'Custom cache key suffix'
     default: ''
+  sudo:
+    description: 'Run installation commands with sudo'
+    default: 'false'
 
 runs:
   using: 'composite'
@@ -30,5 +33,6 @@ runs:
       env:
         INPUT_PACKAGES: ${{ inputs.packages }}
         INPUT_CACHE: ${{ inputs.cache }}
+        INPUT_SUDO: ${{ inputs.sudo }}
       run: |
         "${{ github.action_path }}/scripts/entrypoint.sh"

@@ -3,6 +3,12 @@ set -e
 
 PACKAGES_INPUT="${INPUT_PACKAGES:-full}"
 ENABLE_CACHE="${INPUT_CACHE:-true}"
+USE_SUDO="${INPUT_SUDO:-false}"
+
+SUDO_CMD=""
+if [ "$USE_SUDO" = "true" ]; then
+    SUDO_CMD="sudo"
+fi
 
 CACHE_DIR="/var/cache/apt/archives"
 HOLLOW_PACKAGE_NAME="debian-runner-setup-hollow"
@@ -64,12 +70,12 @@ EOF
     chmod 755 "$pkg_name/DEBIAN/md5sums"
     
     dpkg-deb --build "$pkg_name" "/tmp/${pkg_name}.deb"
-    dpkg -i "/tmp/${pkg_name}.deb" 2>/dev/null || true
+    $SUDO_CMD dpkg -i "/tmp/${pkg_name}.deb" 2>/dev/null || true
     
     rm -rf "$temp_dir"
     
-    mkdir -p "$(dirname "$MARKER_FILE")"
-    touch "$MARKER_FILE"
+    $SUDO_CMD mkdir -p "$(dirname "$MARKER_FILE")"
+    $SUDO_CMD touch "$MARKER_FILE"
     echo "Hollow package installed: $pkg_name"
 }
 
@@ -101,20 +107,21 @@ install_packages() {
     local packages="$1"
     
     echo "Updating package lists..."
-    apt-get update -qq
+    $SUDO_CMD apt-get update -qq
     
     echo "Installing packages: $packages"
-    apt-get install -y -qq $packages
+    $SUDO_CMD apt-get install -y -qq $packages
     
     echo "Cleaning up to reduce cache size..."
-    apt-get clean -qq
-    rm -rf /var/lib/apt/lists/*
+    $SUDO_CMD apt-get clean -qq
+    $SUDO_CMD rm -rf /var/lib/apt/lists/*
 }
 
 main() {
     echo "=== Debian Runner Setup Action ==="
     echo "Packages: $PACKAGES_INPUT"
     echo "Cache enabled: $ENABLE_CACHE"
+    echo "Using sudo: $USE_SUDO"
     
     local packages
     packages=$(get_package_presets "$PACKAGES_INPUT")
