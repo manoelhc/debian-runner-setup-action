@@ -6,7 +6,7 @@ ENABLE_CACHE="${INPUT_CACHE:-true}"
 USE_SUDO="${INPUT_SUDO:-false}"
 
 SUDO_CMD=""
-if [ "$USE_SUDO" = "true" ]; then
+if [ "$USE_SUDO" = "true" ] || [ "$USE_SUDO" = "1" ] || [ "$USE_SUDO" = "yes" ]; then
     SUDO_CMD="sudo"
 fi
 
@@ -91,7 +91,7 @@ check_packages_installed() {
     local all_installed=true
     
     for pkg in $packages; do
-        if ! dpkg -l "$pkg" 2>/dev/null | grep -q "^ii"; then
+        if ! $SUDO_CMD dpkg -l "$pkg" 2>/dev/null | grep -q "^ii"; then
             all_installed=false
             break
         fi

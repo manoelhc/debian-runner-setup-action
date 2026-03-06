@@ -13,13 +13,13 @@ A GitHub Action to install common build packages for Debian/Ubuntu runners with 
 ### Basic Usage
 
 ```yaml
-- uses: manoelhc/debian-runner-setup-action@v1
+- uses: manoelhc/debian-runner-setup-action@v2
 ```
 
 ### Specify Package Preset
 
 ```yaml
-- uses: manoelhc/debian-runner-setup-action@v1
+- uses: manoelhc/debian-runner-setup-action@v2
   with:
     packages: python
 ```
@@ -27,7 +27,7 @@ A GitHub Action to install common build packages for Debian/Ubuntu runners with 
 ### Custom Packages
 
 ```yaml
-- uses: manoelhc/debian-runner-setup-action@v1
+- uses: manoelhc/debian-runner-setup-action@v2
   with:
     packages: build-essential cmake libssl-dev
 ```
@@ -35,9 +35,18 @@ A GitHub Action to install common build packages for Debian/Ubuntu runners with 
 ### Disable Caching
 
 ```yaml
-- uses: manoelhc/debian-runner-setup-action@v1
+- uses: manoelhc/debian-runner-setup-action@v2
   with:
     cache: false
+```
+
+### Using Sudo
+
+```yaml
+- uses: manoelhc/debian-runner-setup-action@v2
+  with:
+    sudo: true
+    packages: python
 ```
 
 ## Inputs
@@ -47,6 +56,7 @@ A GitHub Action to install common build packages for Debian/Ubuntu runners with 
 | `packages` | Package preset (`minimal`, `python`, `ruby`, `rust`, `go`, `node`, `full`) or space-separated package list | `full` |
 | `cache` | Enable `.deb` caching | `true` |
 | `cache-key` | Custom cache key suffix | `''` |
+| `sudo` | Run installation commands with sudo | `false` |
 
 ## Package Presets
 
