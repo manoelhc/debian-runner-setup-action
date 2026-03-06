@@ -101,14 +101,14 @@ install_packages() {
     local packages="$1"
     
     echo "Updating package lists..."
-    apt-get update -qq
+    sudo apt-get update -qq
     
     echo "Installing packages: $packages"
-    apt-get install -y -qq $packages
+    sudo apt-get install -y -qq $packages
     
     echo "Cleaning up to reduce cache size..."
-    apt-get clean -qq
-    rm -rf /var/lib/apt/lists/*
+    sudo apt-get clean -qq
+    sudo rm -rf /var/lib/apt/lists/*
 }
 
 main() {
